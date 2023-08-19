@@ -10,9 +10,17 @@ def select_keyboard(k_type):
         return keyboard
     if k_type == "yes-no":
         keyboard = types.InlineKeyboardMarkup()
-        callback_button1 = types.InlineKeyboardButton(text="Да", callback_data="1")
-        callback_button2 = types.InlineKeyboardButton(text="Нет", callback_data="2")
+        callback_button1 = types.InlineKeyboardButton(text="Да,сильно выражен", callback_data="1")
+        callback_button2 = types.InlineKeyboardButton(text="Да,средней степени", callback_data="2")
         keyboard.add(callback_button1, callback_button2)
+        return keyboard
+    if k_type == "strong-avarage-mild-absent":
+        keyboard = types.InlineKeyboardMarkup()
+        callback_button1 = types.InlineKeyboardButton(text="Да,сильно выражен", callback_data="1")
+        callback_button2 = types.InlineKeyboardButton(text="Да,средней степени", callback_data="2")
+        callback_button3 = types.InlineKeyboardButton(text="Да,слабо выражен", callback_data="3")
+        callback_button4 = types.InlineKeyboardButton(text="Отсутствует", callback_data="4")
+        keyboard.add(callback_button1, callback_button2,callback_button3,callback_button4)
         return keyboard
 
     if k_type == "yes-no-maybe":

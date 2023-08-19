@@ -12,7 +12,7 @@ import utils
 chat_id = ''
 section_number = 0
 # Массив финальных состояний
-finals = ['first3_yes']
+finals = ['']
 
 
 def create_fsm():
@@ -21,9 +21,9 @@ def create_fsm():
                  'events': [  # переходы
                      {'name': 'go_to_start', 'src': finals, 'dst': 'show_sections'},
                      {'name': 'gotstart', 'src': 'waiting_start', 'dst': 'show_sections'},
-                     {'name': 'selected_first', 'src': 'show_sections', 'dst': 'first1'},
-                     {'name': 'first_to_no', 'src': 'first1', 'dst': 'first1_no'},
-                     {'name': 'first_to_yes', 'src': 'first1', 'dst': 'first1_yes'},
+                     {'name': 'selected_first', 'src': 'show_sections', 'dst': 'pain_when_move_finger'},
+                     {'name': 'pain_when_move_finger_to_no', 'src': 'first1', 'dst': 'pain_when_move_finger_no'},
+                     {'name': 'pain_when_move_finger_to_yes', 'src': 'first1', 'dst': 'pain_when_move_finger_yes'},
                      {'name': 'first1_to_first2', 'src': 'first1', 'dst': 'first2'},
                      {'name': 'first1_to_first4', 'src': 'first1', 'dst': 'first4'},
                      {'name': 'first2_to_yes', 'src': 'first2', 'dst': 'first2_yes'},
@@ -45,7 +45,7 @@ def create_fsm():
                  'callbacks': {  # Коллбеки.Указываем какой метод будет отвечать за обработку какого события
                      'onwaiting_start': onwaiting_start,
                      'onshow_sections': onshow_sections,
-                     'onfirst1': onfirst1, 'onfirst1_yes': onfirst1_yes, 'onfirst1_no': onfirst1_no,
+                     'onfirst1': onpain_when_move_finger, 'onpain_when_move_finger_yes': onpain_when_move_finger_yes, 'onpain_when_move_finger_no': onpain_when_move_finger_no,
                      'onfirst2': onfirst2, 'onfirst2_yes': onfirst2_yes, 'onfirst2_no': onfirst2_no,
                      'onfirst3': onfirst3, 'onfirst3_yes': onfirst3_yes, 'onfirst3_no': onfirst3_no,
                      'onfirst4': onfirst4, 'onfirst4_yes': onfirst4_yes, 'onfirst4_no': onfirst4_no,
@@ -83,14 +83,14 @@ def onshow_sections(e):
 
 
 # Дальше пошло описание действий при попадании на каждое конкретное состояние.
-def onfirst1(e):
-    keyboard = utils.select_keyboard("yes-no")
+def onpain_when_move_finger(e):
+    keyboard = utils.select_keyboard("strong-avarage-mild-absent")
     bot.send_message(chat_id=chat_id,
                      text=response_storage.select_message(section_number, 1, 'question'),
                      reply_markup=keyboard)
 
 
-def onfirst1_yes(e):
+def onpain_when_move_finger_yes(e):
     bot.send_message(chat_id=chat_id,
                      text=response_storage.select_message(section_number, 1, 'answer'))
     if fsm.current in finals:  # если текущее состояние является финальным, то
@@ -98,7 +98,7 @@ def onfirst1_yes(e):
         return
 
 
-def onfirst1_no(e):
+def onpain_when_move_finger_no(e):
     bot.send_message(chat_id=chat_id,
                      text=response_storage.select_message(section_number, 1, 'answer'))
     if fsm.current in finals:  # если текущее состояние является финальным, то
